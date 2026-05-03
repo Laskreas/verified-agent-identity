@@ -1,41 +1,36 @@
 name: Verify Human Identity
-
 on:
   workflow_dispatch:
     inputs:
       agent_name:
-        description: 'laskrea'
+        description: 'lakr'
         required: true
-        default: 'laskrea'
+        default: 'lakr'
       agent_description:
-        description: 'laskrea'
+        description: 'lakr'
         required: true
-        default: 'laskrea AI Agent'
+        default: 'lakr AI Agent'
 
 jobs:
   verify:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
-
-      - name: Step 1 - Install ClawHub skill
-        run: npx clawhub@latest install verified-agent-identity
+          node-version: '22'
 
       - name: Install script dependencies
         run: |
           cd scripts
           npm install
 
-      - name: Step 2 - Create new Ethereum Identity
+      - name: Step 1 - Create new Ethereum Identity
         run: node scripts/createNewEthereumIdentity.js
 
-      - name: Step 3 - Link Human to Agent
+      - name: Step 2 - Link Human to Agent
         run: |
-          node scripts/manualLinkHumanToAgent.js --challenge '{"name": "laskrea", "description": "laskrea AI Agent"}'
+          node scripts/manualLinkHumanToAgent.js --challenge '{"name": "lakr", "description": "lakr AI Agent"}'
